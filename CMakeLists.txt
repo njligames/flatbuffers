@@ -102,7 +102,7 @@ if(EXISTS "${CMAKE_TOOLCHAIN_FILE}")
   # is being configured externally
 elseif(APPLE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Werror -Wextra")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
 elseif(CMAKE_COMPILER_IS_GNUCXX)
   if(CYGWIN)
     set(CMAKE_CXX_FLAGS
@@ -112,11 +112,11 @@ elseif(CMAKE_COMPILER_IS_GNUCXX)
       "${CMAKE_CXX_FLAGS} -std=c++0x")
   endif(CYGWIN)
   set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Wall -pedantic -Werror -Wextra -Werror=shadow")
+    "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
   if (GCC_VERSION VERSION_GREATER 4.4)
     set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Wunused-result -Werror=unused-result \
-                          -Wunused-parameter -Werror=unused-parameter")
+      "${CMAKE_CXX_FLAGS} -Wunused-result \
+                          -Wunused-parameter")
   endif()
 
   # Certain platforms such as ARM do not use signed chars by default
@@ -126,7 +126,7 @@ elseif(CMAKE_COMPILER_IS_GNUCXX)
 
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
   set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -std=c++0x -stdlib=libc++ -Wall -pedantic -Werror \
+      "${CMAKE_CXX_FLAGS} -std=c++0x -stdlib=libc++ -Wall -pedantic \
                           -Wextra")
   if(NOT "${CMAKE_SYSTEM_NAME}" MATCHES "FreeBSD")
     set(CMAKE_EXE_LINKER_FLAGS
@@ -221,16 +221,16 @@ if(FLATBUFFERS_BUILD_GRPCTEST)
 endif()
 
 if(FLATBUFFERS_INSTALL)
-  install(DIRECTORY include/flatbuffers DESTINATION include)
-  if(FLATBUFFERS_BUILD_FLATLIB)
-    install(TARGETS flatbuffers DESTINATION lib)
-  endif()
-  if(FLATBUFFERS_BUILD_FLATC)
-    install(TARGETS flatc DESTINATION bin)
-  endif()
-  if(FLATBUFFERS_BUILD_SHAREDLIB)
-    install(TARGETS flatbuffers_shared DESTINATION lib)
-  endif()
+    install(DIRECTORY include/flatbuffers DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    if(FLATBUFFERS_BUILD_FLATLIB)
+        install(TARGETS flatbuffers DESTINATION lib)
+    endif()
+    if(FLATBUFFERS_BUILD_FLATC)
+        install(TARGETS flatc DESTINATION bin)
+    endif()
+    if(FLATBUFFERS_BUILD_SHAREDLIB)
+        install(TARGETS flatbuffers_shared DESTINATION lib)
+    endif()
 endif()
 
 if(FLATBUFFERS_BUILD_TESTS)
